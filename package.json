@@ -1,0 +1,24 @@
+{
+  "name": "guide.js",
+  "version": "1.0.0",
+  "description": "An easy and informative way to guide users through a website.",
+  "main": "example.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csc309-fall-2020/js-library-ranachir.git"
+  },
+  "keywords": [
+    "guide",
+    "tutorial",
+    "walkthrough"
+  ],
+  "author": "Chirag Rana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csc309-fall-2020/js-library-ranachir/issues"
+  },
+  "homepage": "https://github.com/csc309-fall-2020/js-library-ranachir#readme"
+}
