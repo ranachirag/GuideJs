@@ -1,16 +1,36 @@
 "use strict";
 
+const { highlightElement } = require("./highlightElement");
+
 /**
- * Guidejs library
+ * Guide.js library
  *
- * @class Guidejs
+ * @class GuideJs
  */
-function Guidejs() {
-
-}
-
-Guidejs.prototype = {
-    start: function() {
+function GuideJs() {
+    this.settings = {
+        timed: false,
+        duration: 0,            // if guide is timed
+        guideType: "",          // Options: manual, inline, automatic
+        elementsToShow: [], 
+        guideElement: true,     // element to guide the user
+        positionOfElements: "", // the pos
 
     }
 }
+
+GuideJs.prototype = {
+    /* Start the guide */
+    start: function() {
+
+    },
+
+    /* Stop the guide manually */
+    stop: function() {
+
+    }
+
+    // highlightElement: highlightElement({element:document.querySelector("#box"), addOutline:true})
+
+}
+
