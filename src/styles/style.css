@@ -1,0 +1,28 @@
+.guide-overlay {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.guide-box {
+    background-color: white;
+    width: 250px;
+    height: 125px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+.guide-next-btn {
+    
+}
+
+.guide-previous-btn {
+    
+}
+
+.guide-skip-btn {
+
+}
