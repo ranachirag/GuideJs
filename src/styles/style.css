@@ -13,16 +13,50 @@
     height: 125px;
     border: 2px solid #ccc;
     border-radius: 5px;
+    opacity: 0.9;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.guide-box:hover {
+    opacity: 1;
+}
+
+.guide-previous-btn, .guide-skip-btn, .guide-next-btn {
+    position: absolute;
+    width: 33%;
+    height: 20%;
+    border: none;
+    transition: all 0.5s;
+    cursor: pointer;
+    bottom: 0;
+    background-color:lightgreen;
 }
 
 .guide-next-btn {
-    
+    right: 0;
 }
 
 .guide-previous-btn {
-    
+    left: 0;
 }
 
-.guide-skip-btn {
+.guide-previous-btn:hover {
+    /* background-color: lightblue; */
+    padding-left: 15px;
+}
+
+.guide-next-btn:hover {
+    /* background-color: lightblue; */
+    padding-right: 25px;
+}
+
+.guide-progress-bar {
+
+}
+
+.guide-box-description {
 
 }
