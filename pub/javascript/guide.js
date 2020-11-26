@@ -17,23 +17,13 @@ function GuideJs() {
 
     this.elementHighlight = {
         element: null, // Element to highlight
-        stepNumber: 1,
         addOutline: false, 
-        borderWidth: "2px",
-        borderLine: "solid",
-        borderColor: "lightgreen",
         addOverlay: true,
-        overlayRGB: "0, 0, 0",
-        overlayOpacity: 0.5
     }
 
     this.guideBoxSettings = {
         customGuideBox: false,
         element: null,          // element to support 
-        elementDescription: "",
-        stepNumber: "",
-        description: "",
-        locationDirection: "side-right-top",
         dist: 20,               // margin away from element
 
     }
@@ -133,30 +123,30 @@ function initializeGuideJsElements() {
 }
 
 /* Highlights an element with given settings */
-function highlightElement(highlightSettings) {
-    const element = highlightSettings.element
+// function highlightElement(highlightSettings) {
+//     const element = highlightSettings.element
 
-    // Adding outline to the given element in accordance to the given settings
-    if (highlightSettings.addOutline) {
-        const {borderWidth, borderLine, borderColor} = highlightSettings
-        element.style.border = `${borderWidth} ${borderLine} ${borderColor}`
-    }
+//     // Adding outline to the given element in accordance to the given settings
+//     if (highlightSettings.addOutline) {
+//         const {borderWidth, borderLine, borderColor} = highlightSettings
+//         element.style.border = `${borderWidth} ${borderLine} ${borderColor}`
+//     }
 
-    // Adding overlay to the page in accordance to the given settings
-    if(highlightSettings.addOverlay) {
-        element.style.zIndex = "3"
-        const {overlayOpacity, overlayRGB} = highlightSettings
+//     // Adding overlay to the page in accordance to the given settings
+//     if(highlightSettings.addOverlay) {
+//         element.style.zIndex = "3"
+//         const {overlayOpacity, overlayRGB} = highlightSettings
 
-        const divOverlay = document.createElement("div")
-        divOverlay.classList.add("guide-overlay")
+//         const divOverlay = document.createElement("div")
+//         divOverlay.classList.add("guide-overlay")
 
-        console.log(element)
+//         console.log(element)
 
-        const guidejsDiv = document.querySelector(".guidejs-elements")
-        guidejsDiv.appendChild(divOverlay)
+//         const guidejsDiv = document.querySelector(".guidejs-elements")
+//         guidejsDiv.appendChild(divOverlay)
 
-    }
-}
+//     }
+// }
 
 /* Makes a guide box that gives users context for steps */
 function makeGuideBox(guideBoxSettings) {
