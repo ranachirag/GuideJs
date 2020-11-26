@@ -1,24 +1,15 @@
 {
-  "name": "guide.js",
+  "name": "exress_server",
   "version": "1.0.0",
-  "description": "An easy and informative way to guide users through a website.",
-  "main": "example.js",
+  "description": "",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/csc309-fall-2020/js-library-ranachir.git"
-  },
-  "keywords": [
-    "guide",
-    "tutorial",
-    "walkthrough"
-  ],
   "author": "Chirag Rana",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/csc309-fall-2020/js-library-ranachir/issues"
-  },
-  "homepage": "https://github.com/csc309-fall-2020/js-library-ranachir#readme"
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }

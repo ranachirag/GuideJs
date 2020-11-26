@@ -5,12 +5,12 @@
  *
  * @class GuideJs
  */
-function GuideJs(timed=false, duration=0, guideType="", numElements, elementDescriptions) {
-    this.timed = timed
-    this.duration = duration
-    this.guideType = guideType
-    this.numElements = 9
-    this.elementDescriptions = ["add1", "add2", "add3"]
+function GuideJs() {
+    this.timed = false
+    this.duration = "0s"
+    this.guideType = ""
+    this.numElements = arguments[0].length
+    this.elementDescriptions = arguments[0]
 
     this.currentStep = 1
     this.guideBox = null
@@ -18,10 +18,10 @@ function GuideJs(timed=false, duration=0, guideType="", numElements, elementDesc
     this.elementHighlight = {
         element: null, // Element to highlight
         stepNumber: 1,
-        addOutline: true, 
+        addOutline: false, 
         borderWidth: "2px",
         borderLine: "solid",
-        borderColor: "black",
+        borderColor: "lightgreen",
         addOverlay: true,
         overlayRGB: "0, 0, 0",
         overlayOpacity: 0.5
@@ -49,6 +49,7 @@ GuideJs.prototype = {
         if (this.numElements > 0) {
             const element = getElementByStepNumber(this.currentStep)
             const elementDescription = this.elementDescriptions[this.currentStep-1]
+            // this.highlightElement(element)
             this.makeGuideBox(element, elementDescription)
             
         }
@@ -57,7 +58,7 @@ GuideJs.prototype = {
 
     /* Stop the guide manually */
     stop: function() {
-        document.querySelector(`.guidejs-elements`).remove()
+        stopGuide()
     },
 
     /*  */
@@ -72,27 +73,49 @@ GuideJs.prototype = {
         this.guideBox = makeGuideBox(this.guideBoxSettings)
         setElementDescription(elementDescription)
 
-        const nextBtn = addNextButton(this.guideBox)
-        nextBtn.addEventListener("click", () => {
-            this.currentStep += 1
-            const element = getElementByStepNumber(this.currentStep)
-            const elementDescription = this.elementDescriptions[this.currentStep-1]
-            setGuideBoxPosition(this.guideBox, element, 10)
-            setElementDescription(elementDescription)
-        })
-            
-        const prevBtn = addPreviousButton(this.guideBox)
-        prevBtn.addEventListener("click", () => {
-            this.currentStep -= 1
-            const element = getElementByStepNumber(this.currentStep)
-            const elementDescription = this.elementDescriptions[this.currentStep-1]
-            setGuideBoxPosition(this.guideBox, element, 10)
-            setElementDescription(elementDescription)
-        })
 
-        const skipBtn = addSkipButton(this.guideBox)
-        skipBtn.addEventListener("click", this.stop)
+        if(this.currentStep < this.numElements){
+
+            const skipBtn = addSkipButton(this.guideBox)
+            skipBtn.addEventListener("click", stopGuide) 
+
+            const prevBtn = addPreviousButton(this.guideBox)
+            prevBtn.style.display = "none"
+            prevBtn.addEventListener("click", () => {
+                this.currentStep -= 1
+                if (this.currentStep === 1) {
+                    prevBtn.style.display = "none"
+                }
+                if (this.currentStep < this.numElements) {
+                    nextBtn.style.display = ""
+                    skipBtn.innerText = "Skip"
+                }
+                const element = getElementByStepNumber(this.currentStep)
+                const elementDescription = this.elementDescriptions[this.currentStep-1]
+                setGuideBoxPosition(this.guideBox, element, 10)
+                setElementDescription(elementDescription)
+            })
         
+            const nextBtn = addNextButton(this.guideBox)
+            nextBtn.addEventListener("click", () => {
+                this.currentStep += 1
+                if (this.currentStep > 1) {
+                    prevBtn.style.display = ""
+                }
+                if (this.currentStep === this.numElements) {
+                    nextBtn.style.display = "none"
+                    skipBtn.innerText = "Done"
+                }
+                const element = getElementByStepNumber(this.currentStep)
+                const elementDescription = this.elementDescriptions[this.currentStep-1]
+                setGuideBoxPosition(this.guideBox, element, 10)
+                setElementDescription(elementDescription)
+            })
+
+        } else {
+            const skipBtn = addSkipButton(this.guideBox)
+            skipBtn.addEventListener("click", stopGuide) 
+        }
     }
 
 }
@@ -121,21 +144,16 @@ function highlightElement(highlightSettings) {
 
     // Adding overlay to the page in accordance to the given settings
     if(highlightSettings.addOverlay) {
-        
+        element.style.zIndex = "3"
         const {overlayOpacity, overlayRGB} = highlightSettings
 
         const divOverlay = document.createElement("div")
         divOverlay.classList.add("guide-overlay")
 
+        console.log(element)
+
         const guidejsDiv = document.querySelector(".guidejs-elements")
         guidejsDiv.appendChild(divOverlay)
-
-        divOverlay.style.boxShadow = `5px -5px 1px rgba(${overlayRGB}, ${overlayOpacity})`
-
-        divOverlay.style.position = `fixed`
-
-        element.style.zIndex = "9"
-        console.log(element)
 
     }
 }
@@ -153,8 +171,7 @@ function makeGuideBox(guideBoxSettings) {
     descriptionDiv.classList.add("guide-box-description")
     guideBox.appendChild(descriptionDiv)
 
-    const {element} = guideBoxSettings 
-    const {locationDirection, dist} = guideBoxSettings
+    const {element, dist} = guideBoxSettings 
     
     setGuideBoxPosition(guideBox, element, dist)
     
@@ -175,14 +192,14 @@ function setGuideBoxPosition(guideBox, element, dist) {
 
     guideBox.style.position = "fixed"
 
-    const locationDirection = element.classList[2]
+    const classArray = Array.from(element.classList)
 
+    const locationDirection = classArray.filter((className) => className.includes("position"))[0]
 
 
     if (locationDirection.includes("side")){
         if (locationDirection.includes("right")) {
             guideBox.style.left = `${left + width + dist}px`
-            console.log(dist)
         }
     
         if (locationDirection.includes("left")) {
@@ -209,15 +226,15 @@ function setGuideBoxPosition(guideBox, element, dist) {
         }
         
         if (locationDirection.includes("below")) {
-            guideBox.style.top = `${top + height + guideBoxHeight + dist}px` 
+            guideBox.style.top = `${top + height + dist}px` 
          }
 
         if (locationDirection.includes("right")) {
-            guideBox.style.left = `${left}px`
+            guideBox.style.left = `${left + width - guideBoxWidth}px`
         }
     
         if (locationDirection.includes("left")) {
-            guideBox.style.left = `${left - guideBoxWidth}px`
+            guideBox.style.left = `${left}px`
         }
 
         if (locationDirection.includes("middle")) {
@@ -312,5 +329,6 @@ function addSkipButton(guideBox) {
     return skipBtn
 }
 
-
-
+function stopGuide() {
+    document.querySelector(`.guidejs-elements`).remove()
+}
