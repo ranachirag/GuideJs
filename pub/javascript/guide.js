@@ -39,7 +39,7 @@ GuideJs.prototype = {
         if (this.numElements > 0) {
             const element = getElementByStepNumber(this.currentStep)
             const elementDescription = this.elementDescriptions[this.currentStep-1]
-            // this.highlightElement(element)
+            this.highlightElement(element)
             this.makeGuideBox(element, elementDescription)
             
         }
@@ -72,6 +72,8 @@ GuideJs.prototype = {
             const prevBtn = addPreviousButton(this.guideBox)
             prevBtn.style.display = "none"
             prevBtn.addEventListener("click", () => {
+                const el = getElementByStepNumber(this.currentStep)
+                el.classList.remove("guidejs-highlight")
                 this.currentStep -= 1
                 if (this.currentStep === 1) {
                     prevBtn.style.display = "none"
@@ -84,10 +86,14 @@ GuideJs.prototype = {
                 const elementDescription = this.elementDescriptions[this.currentStep-1]
                 setGuideBoxPosition(this.guideBox, element, 10)
                 setElementDescription(elementDescription)
+                this.highlightElement(element)
             })
         
             const nextBtn = addNextButton(this.guideBox)
             nextBtn.addEventListener("click", () => {
+                const el = getElementByStepNumber(this.currentStep)
+                el.classList.remove("guidejs-highlight")
+
                 this.currentStep += 1
                 if (this.currentStep > 1) {
                     prevBtn.style.display = ""
@@ -96,10 +102,12 @@ GuideJs.prototype = {
                     nextBtn.style.display = "none"
                     skipBtn.innerText = "Done"
                 }
+
                 const element = getElementByStepNumber(this.currentStep)
                 const elementDescription = this.elementDescriptions[this.currentStep-1]
                 setGuideBoxPosition(this.guideBox, element, 10)
                 setElementDescription(elementDescription)
+                this.highlightElement(element)
             })
 
         } else {
@@ -123,30 +131,33 @@ function initializeGuideJsElements() {
 }
 
 /* Highlights an element with given settings */
-// function highlightElement(highlightSettings) {
-//     const element = highlightSettings.element
+function highlightElement(highlightSettings) {
+    const element = highlightSettings.element
 
-//     // Adding outline to the given element in accordance to the given settings
-//     if (highlightSettings.addOutline) {
-//         const {borderWidth, borderLine, borderColor} = highlightSettings
-//         element.style.border = `${borderWidth} ${borderLine} ${borderColor}`
-//     }
+    // Adding outline to the given element in accordance to the given settings
+    if (highlightSettings.addOutline) {
+        const {borderWidth, borderLine, borderColor} = highlightSettings
+        element.style.border = `${borderWidth} ${borderLine} ${borderColor}`
+    }
 
-//     // Adding overlay to the page in accordance to the given settings
-//     if(highlightSettings.addOverlay) {
-//         element.style.zIndex = "3"
-//         const {overlayOpacity, overlayRGB} = highlightSettings
+    // Adding overlay to the page in accordance to the given settings
+    if(highlightSettings.addOverlay) {
+    
+        const {overlayOpacity, overlayRGB} = highlightSettings
+        if (document.querySelectorAll(".guide-overlay").length == 0) {
+            const divOverlay = document.createElement("div")
+            divOverlay.classList.add("guide-overlay")
 
-//         const divOverlay = document.createElement("div")
-//         divOverlay.classList.add("guide-overlay")
+            console.log(element)
 
-//         console.log(element)
+            const guidejsDiv = document.querySelector(".guidejs-elements")
+            guidejsDiv.appendChild(divOverlay)
+        }
 
-//         const guidejsDiv = document.querySelector(".guidejs-elements")
-//         guidejsDiv.appendChild(divOverlay)
+        element.classList.add("guidejs-highlight")
 
-//     }
-// }
+    }
+}
 
 /* Makes a guide box that gives users context for steps */
 function makeGuideBox(guideBoxSettings) {
