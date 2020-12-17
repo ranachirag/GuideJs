@@ -17,7 +17,10 @@ function GuideJs() {
 
     this.elementHighlight = {
         element: null, // Element to highlight
-        addOutline: false, 
+        addOutline: true, 
+        borderWidth: "1px", 
+        borderLine: "solid",
+        borderColor: "green",
         addOverlay: true,
     }
 
@@ -39,7 +42,6 @@ GuideJs.prototype = {
         if (this.numElements > 0) {
             const element = getElementByStepNumber(this.currentStep)
             const elementDescription = this.elementDescriptions[this.currentStep-1]
-            this.highlightElement(element)
             this.makeGuideBox(element, elementDescription)
             
         }
@@ -62,7 +64,7 @@ GuideJs.prototype = {
         this.guideBoxSettings.element = element
         this.guideBox = makeGuideBox(this.guideBoxSettings)
         setElementDescription(elementDescription)
-
+        this.highlightElement(element)
 
         if(this.currentStep < this.numElements){
 
@@ -75,6 +77,7 @@ GuideJs.prototype = {
                 const el = getElementByStepNumber(this.currentStep)
                 el.classList.remove("guidejs-highlight")
                 this.currentStep -= 1
+                updateProgress(this.guideBox, this.currentStep, this.numElements)
                 if (this.currentStep === 1) {
                     prevBtn.style.display = "none"
                 }
@@ -93,8 +96,9 @@ GuideJs.prototype = {
             nextBtn.addEventListener("click", () => {
                 const el = getElementByStepNumber(this.currentStep)
                 el.classList.remove("guidejs-highlight")
-
+                
                 this.currentStep += 1
+                updateProgress(this.guideBox, this.currentStep, this.numElements)
                 if (this.currentStep > 1) {
                     prevBtn.style.display = ""
                 }
@@ -137,7 +141,7 @@ function highlightElement(highlightSettings) {
     // Adding outline to the given element in accordance to the given settings
     if (highlightSettings.addOutline) {
         const {borderWidth, borderLine, borderColor} = highlightSettings
-        element.style.border = `${borderWidth} ${borderLine} ${borderColor}`
+        // element.style.border = `${borderWidth} ${borderLine} ${borderColor}`
     }
 
     // Adding overlay to the page in accordance to the given settings
@@ -148,15 +152,20 @@ function highlightElement(highlightSettings) {
             const divOverlay = document.createElement("div")
             divOverlay.classList.add("guide-overlay")
 
-            console.log(element)
-
             const guidejsDiv = document.querySelector(".guidejs-elements")
             guidejsDiv.appendChild(divOverlay)
         }
 
         element.classList.add("guidejs-highlight")
 
+        // document.onmousemove = function(e) {
+        //     var mousecoords = getMousePos(e);
+        //     if ()
+            
+        // };
     }
+
+
 }
 
 /* Makes a guide box that gives users context for steps */
@@ -332,4 +341,40 @@ function addSkipButton(guideBox) {
 
 function stopGuide() {
     document.querySelector(`.guidejs-elements`).remove()
+}
+
+
+function getMousePos(e) {
+    return {x:e.clientX,y:e.clientY};
+}
+
+function updateProgress(guideBox, currentStep, totalSteps) {
+    let currentPercentage = currentStep / totalSteps
+    const guideBoxWidth = guideBox.offsetWidth
+    const guideBoxHeight = guideBox.offsetHeight
+
+    // console.log(currentStep, totalSteps, currentPercentage, guideBox.style.backgroundPosition)
+
+    if (currentPercentage <= 0.25) {
+        currentPercentage = (1-currentPercentage) * guideBoxWidth
+        console.log
+        guideBox.style.backgroundPosition = `-${currentPercentage}px 0px, 295px -150px, 300px 145px, 0px 150px`
+
+    } else if(currentPercentage <= 0.5) {
+        currentPercentage = (1 - ((currentPercentage - 0.25) / 0.25)) * guideBoxHeight
+        guideBox.style.backgroundPosition = `0px 0px, 295px -${currentPercentage}px, 300px 145px, 0px 150px`
+
+    } else if(currentPercentage <= 0.75) {
+        currentPercentage = (1- ((currentPercentage - 0.5) / 0.25)) * guideBoxWidth
+        guideBox.style.backgroundPosition = `0px 0px, 295px 0px, ${currentPercentage}px 145px, 0px 150px`
+
+    } else if(currentPercentage <= 1) {
+        currentPercentage = (1 - ((currentPercentage - 0.75) / 0.25)) * guideBoxWidth
+        guideBox.style.backgroundPosition = `0px 0px, 295px 0px, 0px 145px, 0px ${currentPercentage}px`
+    }
+    
+    if(currentPercentage == 1) {
+        guideBox.style.backgroundColor = 'rgb(18, 195, 248)'
+    }
+
 }
