@@ -69,13 +69,20 @@ GuideJs.prototype = {
         if(this.currentStep < this.numElements){
 
             const skipBtn = addSkipButton(this.guideBox)
-            skipBtn.addEventListener("click", stopGuide) 
+            skipBtn.addEventListener("click", () => {
+                const el = getElementByStepNumber(this.currentStep)
+                el.classList.remove("guidejs-outline")
+                stopGuide()
+
+            }) 
 
             const prevBtn = addPreviousButton(this.guideBox)
             prevBtn.style.display = "none"
             prevBtn.addEventListener("click", () => {
                 const el = getElementByStepNumber(this.currentStep)
                 el.classList.remove("guidejs-highlight")
+                el.classList.remove("guidejs-outline")
+
                 this.currentStep -= 1
                 updateProgress(this.guideBox, this.currentStep, this.numElements)
                 if (this.currentStep === 1) {
@@ -96,6 +103,7 @@ GuideJs.prototype = {
             nextBtn.addEventListener("click", () => {
                 const el = getElementByStepNumber(this.currentStep)
                 el.classList.remove("guidejs-highlight")
+                el.classList.remove("guidejs-outline")
                 
                 this.currentStep += 1
                 updateProgress(this.guideBox, this.currentStep, this.numElements)
@@ -142,6 +150,7 @@ function highlightElement(highlightSettings) {
     if (highlightSettings.addOutline) {
         const {borderWidth, borderLine, borderColor} = highlightSettings
         // element.style.border = `${borderWidth} ${borderLine} ${borderColor}`
+        element.classList.add("guidejs-outline")
     }
 
     // Adding overlay to the page in accordance to the given settings
@@ -204,8 +213,11 @@ function setGuideBoxPosition(guideBox, element, dist) {
 
     const classArray = Array.from(element.classList)
 
-    const locationDirection = classArray.filter((className) => className.includes("position"))[0]
+    // const locationDirection = classArray.filter((className) => className.includes("position"))[0]
+    const valPositions = autoPosition(guideBox, element, dist)
+    let locationDirection = valPositions[1]
 
+    // const optimalX = findOptimalPositionX(guideBox, element, dist
 
     if (locationDirection.includes("side")){
         if (locationDirection.includes("right")) {
@@ -224,9 +236,9 @@ function setGuideBoxPosition(guideBox, element, dist) {
             guideBox.style.top = `${top + height/2}px`
         }
     
-        if (locationDirection.includes("bottom")) {
-            guideBox.style.top = `${top + height}px`
-        }
+        // if (locationDirection.includes("bottom")) {
+        //     guideBox.style.top = `${top + height}px`
+        // }
     }
 
     if (locationDirection.includes("above") || locationDirection.includes("below")) {
@@ -256,42 +268,79 @@ function setGuideBoxPosition(guideBox, element, dist) {
 
 }
 
-// function findOptimalPositionX(guideBox, element, dist) {
-//     const viewportOffset = element.getBoundingClientRect()
-//     const left = viewportOffset.left;
-//     const elementWidth = element.offsetWidth
-//     const browserWidth = window.innerWidth
-//     const guideBoxWidth = guideBox.style.width
+function autoPosition(guideBox, element, dist) {
+    const viewportOffset = element.getBoundingClientRect();
+    const top = viewportOffset.top;
+    const elementHeight = element.offsetHeight
+    const browserHeight = window.innerHeight
+    const guideBoxHeight = parseInt(guideBox.offsetHeight) - 6
 
-//     console.log(elementWidth, browserWidth)
+    const left = viewportOffset.left;
+    const elementWidth = element.offsetWidth
+    const browserWidth = window.innerWidth
+    const guideBoxWidth = parseInt(guideBox.offsetWidth) - 6
 
-//     let position = left + elementWidth + dist + guideBoxWidth
-//     if (position > 0 && position < browserWidth) {
-//         return "right"
-//     }
-//     position = left - elementWidth - dist - guideBoxWidth
-//     if (position > 0 && position < browserWidth) {
-//         return "left"
-//     }
-//     return "none"
-// }
+    const valPositions = []
 
-// function findOptimalPositionY(element, dist) {
-//     const viewportOffset = element.getBoundingClientRect();
-//     const top = viewportOffset.top;
-//     const elementHeight = element.offsetHeight
-//     const browserHeight = window.innerHeight
+    let positionY = 0
+    let positionX = 0
 
-//     let position = top
-//     if (position > 0 && position < browserHeight) {
-//         return "top"
-//     }
-//     position = top + elementHeight/2
-//     if (positionForRight > 0 && positionForRight < browserWidth) {
-//         return "middle"
-//     }
-//     return "none"
-// }
+    positionY = top - dist - guideBoxHeight
+    if (positionY > 0 && positionY < browserHeight) {
+        positionX = left + guideBoxWidth 
+        if (positionX > 0 && positionX < browserWidth) {
+            valPositions.push('above-left')
+        }
+
+        positionX = left + elementWidth/2 + guideBoxWidth 
+        if (positionX > 0 && positionX < browserWidth) {
+            valPositions.push('above-middle')
+        }
+    }
+
+    positionY = top + elementHeight + dist + guideBoxHeight
+    if (positionY > 0 && positionY < browserHeight) {
+        console.log(left + guideBoxWidth , browserWidth)
+        positionX = left + guideBoxWidth 
+        if (positionX > 0 && positionX < browserWidth) {
+            valPositions.push('below-left')
+        }
+
+        positionX = left + elementWidth/2 + guideBoxWidth 
+        if (positionX > 0 && positionX < browserWidth) {
+            valPositions.push('below-middle')
+        }
+    }
+
+    positionX = left - dist - guideBoxWidth
+    if (positionX > 0 && positionX < browserWidth) {
+        positionY = top + guideBoxHeight 
+        if (positionY > 0 && positionY < browserHeight) {
+            valPositions.push('side-left-top')
+        }
+
+        positionY = top + (elementHeight/2) + guideBoxHeight 
+        if (positionY > 0 && positionY < browserHeight) {
+            valPositions.push('side-left-middle')
+        }
+    }
+
+    positionX = left + elementWidth + dist + guideBoxWidth
+    if (positionX > 0 && positionX < browserWidth) {
+        positionY = top + guideBoxHeight 
+        if (positionY > 0 && positionY < browserHeight) {
+            valPositions.push('side-right-top')
+        }
+
+        positionY = top + (elementHeight/2) + guideBoxHeight 
+        if (positionY > 0 && positionY < browserHeight) {
+            valPositions.push('side-right-middle')
+        }
+    }
+    console.log(valPositions)
+    return valPositions
+    
+}
 
 
 /* Add a progress bar to Guide Box */
@@ -350,31 +399,27 @@ function getMousePos(e) {
 
 function updateProgress(guideBox, currentStep, totalSteps) {
     let currentPercentage = currentStep / totalSteps
-    const guideBoxWidth = guideBox.offsetWidth
-    const guideBoxHeight = guideBox.offsetHeight
+    const guideBoxWidth = guideBox.offsetWidth - 6
+    const guideBoxHeight = guideBox.offsetHeight - 6
 
     // console.log(currentStep, totalSteps, currentPercentage, guideBox.style.backgroundPosition)
 
     if (currentPercentage <= 0.25) {
         currentPercentage = (1-currentPercentage) * guideBoxWidth
         console.log
-        guideBox.style.backgroundPosition = `-${currentPercentage}px 0px, 295px -150px, 300px 145px, 0px 150px`
+        guideBox.style.backgroundPosition = `-${currentPercentage}px 0px, ${guideBoxWidth-5}px -${guideBoxHeight}px, ${guideBoxWidth}px ${guideBoxHeight-5}px, 0px ${guideBoxHeight}px`
 
     } else if(currentPercentage <= 0.5) {
         currentPercentage = (1 - ((currentPercentage - 0.25) / 0.25)) * guideBoxHeight
-        guideBox.style.backgroundPosition = `0px 0px, 295px -${currentPercentage}px, 300px 145px, 0px 150px`
+        guideBox.style.backgroundPosition = `0px 0px, ${guideBoxWidth-5}px -${currentPercentage}px, ${guideBoxWidth}px ${guideBoxHeight-5}px, 0px ${guideBoxHeight}px`
 
     } else if(currentPercentage <= 0.75) {
         currentPercentage = (1- ((currentPercentage - 0.5) / 0.25)) * guideBoxWidth
-        guideBox.style.backgroundPosition = `0px 0px, 295px 0px, ${currentPercentage}px 145px, 0px 150px`
+        guideBox.style.backgroundPosition = `0px 0px, ${guideBoxWidth-5}px 0px, ${currentPercentage}px ${guideBoxHeight-5}px, 0px ${guideBoxHeight}px`
 
     } else if(currentPercentage <= 1) {
         currentPercentage = (1 - ((currentPercentage - 0.75) / 0.25)) * guideBoxWidth
-        guideBox.style.backgroundPosition = `0px 0px, 295px 0px, 0px 145px, 0px ${currentPercentage}px`
-    }
-    
-    if(currentPercentage == 1) {
-        guideBox.style.backgroundColor = 'rgb(18, 195, 248)'
+        guideBox.style.backgroundPosition = `0px 0px, ${guideBoxWidth-5}px 0px, 0px ${guideBoxHeight-5}px, 0px ${currentPercentage}px`
     }
 
 }
