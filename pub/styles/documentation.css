@@ -1,0 +1,33 @@
+body {
+    background-color: #ccc;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-start;
+}
+
+a {
+    margin: 10px;
+}
+
+.api {
+    background-color:white;
+    margin: auto;
+    width: 90%;
+    margin-top: 10vh;
+    height: 80vh;
+    padding: 10px;
+    border: 5px solid darkgrey;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

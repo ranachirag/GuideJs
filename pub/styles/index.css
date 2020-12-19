@@ -1,0 +1,51 @@
+body {
+    background-color: #ccc;
+}
+
+.main {
+    background-color:white;
+    margin: auto;
+    width: 50%;
+    margin-top: 10vh;
+    height: 80vh;
+    padding: 10px;
+    border: 5px solid darkgrey;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: 0.5s;
+    background: linear-gradient(to right, rgb(18, 195, 248) 99.99%, transparent), linear-gradient(to bottom, rgb(18, 195, 248) 99.99%, transparent), linear-gradient(to right,  rgb(18, 195, 248) 99.99%, transparent), linear-gradient(to bottom,  rgb(17, 176, 224) 99.99%, transparent);
+    background-size: 100% 15px, 15px 100%, 100% 15px, 15px 100%;
+    background-repeat: no-repeat;
+    animation: progress 4s linear forwards;
+    /* background-position: -230px 0px, 225px -120px, 230px 115px, 0px 120px; */
+    background-position: -100% 0px, 100% -100%, 100% 100%, 0px 100%;
+    background-color: rgb(255, 255, 255);
+}
+
+
+.description {
+    margin-top: 4vh;
+    
+}
+
+h4 {
+    color: darkgrey;
+}
+
+.nav {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 5vh;
+}
+
+button {
+    margin: 30px;
+}
+
+.main:hover {
+    opacity: 1;
+}

@@ -13,7 +13,7 @@
     width: 250px;
     height: 120px;
     border: 3px solid darkgrey;
-    border-radius: 5px;
+    border-radius: 10px;
     opacity: 0.9;
     transition: 0.3s;
     display: flex;
@@ -24,10 +24,11 @@
     background: linear-gradient(to right, rgb(18, 195, 248) 99.99%, transparent), linear-gradient(to bottom, rgb(18, 195, 248) 99.99%, transparent), linear-gradient(to right,  rgb(18, 195, 248) 99.99%, transparent), linear-gradient(to bottom,  rgb(17, 176, 224) 99.99%, transparent);
     background-size: 100% 6px, 5px 100%, 100% 5px, 5px 100%;
     background-repeat: no-repeat;
-    animation: progress 4s linear forwards;
+    /* animation: progress 4s linear forwards; */
     /* background-position: -230px 0px, 225px -120px, 230px 115px, 0px 120px; */
     background-position: -250px 0px, 245px -120px, 250px 115px, 0px 120px;
     background-color: rgb(255, 255, 255);
+    box-shadow: 0px 8px 10px rgb(0, 0, 0, 0.2);
 }
 
 
@@ -40,13 +41,17 @@
     width: 30%;
     height: 20%;
     border: none;
+    border-radius: 3px;
+    box-shadow: 0px 8px 10px rgb(0, 0, 0, 0.2);
     transition: all 0.5s;
     cursor: pointer;
     bottom: 6px;
     /* right: 2px; */
     color: black;
-    margin-right: 5px ;
+    margin-right: 6px ;
+    margin-left: 6px ;
     background-color:lightgrey;
+    font-family: 'Roboto', sans-serif;
 }
 
 .guide-next-btn {
@@ -54,22 +59,22 @@
 }
 
 .guide-previous-btn {
-    left: 5px;
+    left: 0px;
 }
 
 .guide-previous-btn:hover {
-    /* background-color: lightblue; */
+    background-color:  rgb(18, 195, 248);
     padding-left: 15px;
 }
 
 .guide-next-btn:hover {
-    /* background-color: lightblue; */
+    background-color:  rgb(18, 195, 248);
     padding-right: 25px;
 }
 
-/* .guide-progress-bar {
-
-} */
+.guide-next-btn:hover {
+    background-color:  rgb(18, 195, 248);
+}
 
 .guide-box-description {
     position: absolute;
@@ -78,7 +83,8 @@
     margin-left: 10px;
     margin-right: 10px;
     font-size: small;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+    font-family: 'Roboto', sans-serif;
 }
 
 .guidejs-highlight {
@@ -88,4 +94,8 @@
 
 .guidejs-outline {
     border: 3px solid  rgb(18, 195, 248);
+}
+
+.guidejs-span-highlight {
+    background-color: #ffff00;
 }

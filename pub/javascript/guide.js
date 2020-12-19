@@ -6,9 +6,6 @@
  * @class GuideJs
  */
 function GuideJs() {
-    this.timed = false
-    this.duration = "0s"
-    this.guideType = ""
     this.numElements = arguments[0].length
     this.elementDescriptions = arguments[0]
 
@@ -18,10 +15,7 @@ function GuideJs() {
     this.elementHighlight = {
         element: null, // Element to highlight
         addOutline: true, 
-        borderWidth: "1px", 
-        borderLine: "solid",
-        borderColor: "green",
-        addOverlay: true,
+        addOverlay: false
     }
 
     this.guideBoxSettings = {
@@ -35,8 +29,12 @@ function GuideJs() {
 
 /* Prototype of GuideJs object. Use the given functions to create one instance of a walkthrough guide. */
 GuideJs.prototype = {
-    /* Start the guide */
 
+    setOptions: function () {
+        
+    },
+
+    /* Start the guide */
     start: function() {
         initializeGuideJsElements()
         if (this.numElements > 0) {
@@ -71,7 +69,11 @@ GuideJs.prototype = {
             const skipBtn = addSkipButton(this.guideBox)
             skipBtn.addEventListener("click", () => {
                 const el = getElementByStepNumber(this.currentStep)
-                el.classList.remove("guidejs-outline")
+                if(el.tagName.toLowerCase() == 'span') {
+                    el.classList.remove("guidejs-span-highlight")
+                } else {
+                    el.classList.remove("guidejs-outline")
+                }
                 stopGuide()
 
             }) 
@@ -81,8 +83,12 @@ GuideJs.prototype = {
             prevBtn.addEventListener("click", () => {
                 const el = getElementByStepNumber(this.currentStep)
                 el.classList.remove("guidejs-highlight")
-                el.classList.remove("guidejs-outline")
-
+                if(el.tagName.toLowerCase() == 'span') {
+                    el.classList.remove("guidejs-span-highlight")
+                } else {
+                    el.classList.remove("guidejs-outline")
+                }
+                
                 this.currentStep -= 1
                 updateProgress(this.guideBox, this.currentStep, this.numElements)
                 if (this.currentStep === 1) {
@@ -103,8 +109,12 @@ GuideJs.prototype = {
             nextBtn.addEventListener("click", () => {
                 const el = getElementByStepNumber(this.currentStep)
                 el.classList.remove("guidejs-highlight")
-                el.classList.remove("guidejs-outline")
-                
+                if(el.tagName.toLowerCase() == 'span') {
+                    el.classList.remove("guidejs-span-highlight")
+                } else {
+                    el.classList.remove("guidejs-outline")
+                }
+    
                 this.currentStep += 1
                 updateProgress(this.guideBox, this.currentStep, this.numElements)
                 if (this.currentStep > 1) {
@@ -150,7 +160,12 @@ function highlightElement(highlightSettings) {
     if (highlightSettings.addOutline) {
         const {borderWidth, borderLine, borderColor} = highlightSettings
         // element.style.border = `${borderWidth} ${borderLine} ${borderColor}`
-        element.classList.add("guidejs-outline")
+        if (element.tagName.toLowerCase() == 'span') {
+            element.classList.add("guidejs-span-highlight")
+        } else {
+            element.classList.add("guidejs-outline")
+        }
+        
     }
 
     // Adding overlay to the page in accordance to the given settings
@@ -167,13 +182,7 @@ function highlightElement(highlightSettings) {
 
         element.classList.add("guidejs-highlight")
 
-        // document.onmousemove = function(e) {
-        //     var mousecoords = getMousePos(e);
-        //     if ()
-            
-        // };
     }
-
 
 }
 
@@ -215,7 +224,7 @@ function setGuideBoxPosition(guideBox, element, dist) {
 
     // const locationDirection = classArray.filter((className) => className.includes("position"))[0]
     const valPositions = autoPosition(guideBox, element, dist)
-    let locationDirection = valPositions[1]
+    let locationDirection = valPositions[0]
 
     // const optimalX = findOptimalPositionX(guideBox, element, dist
 
@@ -268,6 +277,7 @@ function setGuideBoxPosition(guideBox, element, dist) {
 
 }
 
+/* Find the Optimal positions for the guide box in reference to the element it provides context for */
 function autoPosition(guideBox, element, dist) {
     const viewportOffset = element.getBoundingClientRect();
     const top = viewportOffset.top;
@@ -296,11 +306,15 @@ function autoPosition(guideBox, element, dist) {
         if (positionX > 0 && positionX < browserWidth) {
             valPositions.push('above-middle')
         }
+
+        positionX = left + elementWidth - guideBoxWidth 
+        if (positionX > 0 && positionX < browserWidth) {
+            valPositions.push('above-right')
+        }
     }
 
     positionY = top + elementHeight + dist + guideBoxHeight
     if (positionY > 0 && positionY < browserHeight) {
-        console.log(left + guideBoxWidth , browserWidth)
         positionX = left + guideBoxWidth 
         if (positionX > 0 && positionX < browserWidth) {
             valPositions.push('below-left')
@@ -309,6 +323,11 @@ function autoPosition(guideBox, element, dist) {
         positionX = left + elementWidth/2 + guideBoxWidth 
         if (positionX > 0 && positionX < browserWidth) {
             valPositions.push('below-middle')
+        }
+
+        positionX = left + elementWidth - guideBoxWidth 
+        if (positionX > 0 && positionX < browserWidth) {
+            valPositions.push('below-right')
         }
     }
 
@@ -337,18 +356,8 @@ function autoPosition(guideBox, element, dist) {
             valPositions.push('side-right-middle')
         }
     }
-    console.log(valPositions)
     return valPositions
     
-}
-
-
-/* Add a progress bar to Guide Box */
-function createProgressBar(guideBox) {
-    const progressBar = document.createElement("button")
-
-    progressBar.classList.append("guide-progress-bar")
-
 }
 
 function setElementDescription(elementDescription) {
@@ -406,7 +415,6 @@ function updateProgress(guideBox, currentStep, totalSteps) {
 
     if (currentPercentage <= 0.25) {
         currentPercentage = (1-currentPercentage) * guideBoxWidth
-        console.log
         guideBox.style.backgroundPosition = `-${currentPercentage}px 0px, ${guideBoxWidth-5}px -${guideBoxHeight}px, ${guideBoxWidth}px ${guideBoxHeight-5}px, 0px ${guideBoxHeight}px`
 
     } else if(currentPercentage <= 0.5) {
@@ -423,3 +431,12 @@ function updateProgress(guideBox, currentStep, totalSteps) {
     }
 
 }
+
+
+// function staticGuide(guideBox) {
+//     document.onmousemove = function(e) {
+//         var mousecoords = getMousePos(e);
+//         // const distance =  
+        
+//     }
+// }
