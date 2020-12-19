@@ -35,6 +35,7 @@ guide.setOptions({
     'This the demo for Guide.js complete. More exciting features will be added. Thank You for viewing.',
     'nothing'],
     textHighlightColor: 'yellow',
+    distance: 20,
 
 })
 
