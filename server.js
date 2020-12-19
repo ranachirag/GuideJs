@@ -10,7 +10,7 @@ const path = require('path');
 
 // Setting up a static directory for the files in /pub
 // using Express middleware.
-app.use(express.static(path.join(__dirname, '/pub/index.html')))
+app.use(express.static(path.join(__dirname, '/pub')))
 
 
 const port = process.env.PORT || 5000
