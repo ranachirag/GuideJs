@@ -6,6 +6,9 @@
         <title>GuideJs API</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="./styles/documentation.css" />
+
+        <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> -->
+
     </head>
     <body>
         <div class="navbar navbar-light bg-light">
@@ -16,43 +19,150 @@
         </div>
         <div class="main">
             <div class="api">
+              <h2>Getting Started</h2>
                 <div class="get-started">
-                    <h2>Getting Started</h2>
-                    <p></p>
-                </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><h4>Download Guide.Js</h4> </br>
+                          <a href="https://github.com/csc309-fall-2020/js-library-ranachir">Download the library.</a> </br></li>
+                        <li class="list-group-item">
+                          <h4>JavaScript - Required Files</h4>
+                            The files <strong>guide.js</strong> and <strong>guidejs.css</strong> are required to use this library.</br>
+                            Include this script in the <code>&lt;head&gt;</code> of your html page </br>
+                            <pre>
+                                <code class="language-html">
+            &lt;link rel="stylesheet" type="text/css" href="./styles/guidejs.css" /&gt;
+            &lt;script defer type="text/javascript" src='./javascript/guide.js'&gt;&lt;/script&gt;
+                                 </code> 
+                             </pre>
+                        </li>
+                        <li class="list-group-item">
+                            <h4>JavaScript - Example</h4>
+                            <pre><code>
+            const guide = new GuideJs()
 
+            guide.setOptions({
+              elementDescriptions: ['Button 1 - Shows First Step', 
+                                    'Button 2 - Shows Second Step', 
+                                    'Here is some Example Text to show Highlighting'],
+              addOverlay: true,
+              overlayOpacity: 1,
+              addOutline: true,
+              theme: "red",
+              guideWidth: '500px',
+              guideHeight: '300px',
+              guideDistance: 30,
+            })
+
+            guide.start()
+
+                            </code></pre>
+
+                        </li>
+                        <li class="list-group-item">
+                            <h4>HTML - Example</h4>
+                            <pre>
+                               <code class="language-html">
+            &lt;div class="example" &gt;
+                &lt;button class="guidejs-step-1">Button 1 &lt;/button &gt;
+                &lt;button class="guidejs-step-2">Button 2 &lt;/button &gt;
+                &lt;span class="guidejs-step-3" &gt; Example Text &lt;/span &gt;
+            &lt;/div &gt;
+        
+                                </code> 
+                            </pre>
+                        </li>
+                        <!-- <li class="list-group-item">Vestibulum at eros</li> -->
+                    </ul>
+
+                    
+
+                </div>
+                <h2>API - <code>GuideJs</code></h2>
+                <div class="set-options">
+                    <h4><code>GuideJs.setOptions(settings)</code></h4>
+                </div>
                 <table class="table">
                     <thead class="thead-dark">
                       <tr>
-                        <th scope="col">Property</th>
+                        <th scope="col"><code>settings </code> Property</th>
                         <th scope="col">Default</th>
                         <th scope="col">Type</th>
                         <th scope="col">Description</th>
                       </tr>
                     </thead>
                     <tbody>
+                       <tr>
+                        <th scope="row">elementDescriptions</th>
+                        <td><code>[]</code> </td>
+                        <td>Array</td>
+                        <td>Sets the description/information for the element the guide box is providing context for.</td>
+                        </tr>
                       <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <th scope="row">addOverlay</th>
+                        <td><code>true</code> </td>
+                        <td>Boolean</td>
+                        <td>If  <code> true</code>, adds a black tinted overlay, focusing in on the element and the guide box only.</br>
+                            If  <code> false</code>, no overlay is added.</td>
                       </tr>
                       <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
+                        <th scope="row">overlayOpacity</th>
+                        <td><code>0.9</code> </td>
+                        <td>Number</td>
+                        <td>If  <strong>addOverlay</strong> is <code> true</code>, this sets the opacity of the overlay.</br>
+                            0 to 1 range. </br>
+                            Low value means more transparent, high value means more opaque.</td>
                       </tr>
                       <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
+                        <th scope="row">addOutline</th>
+                        <td><code>true</code> </td>
+                        <td>Boolean</td>
+                        <td>If  <code> true</code>, adds an outline to the  </br>
+                            If  <code> false</code>, no outline is added.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">theme</th>
+                        <td><code>"blue"</code> </td>
+                        <td>String</td>
+                        <td>If  <code> "blue"</code>, sets theme of the guide box (the outline and progress bar) to blue.  </br>
+                            If  <code> "red"</code>, sets theme of the guide box (the outline and progress bar) to red.  </br>
+                            If  <code> "green"</code>, sets theme of the guide box (the outline and progress bar) to green.  </br>
+                            If  <code> "yellow"</code>, sets theme of the guide box (the outline and progress bar) to yellow.
+                      </tr>
+                      <tr>
+                        <th scope="row">guideWidth</th>
+                        <td><code>"250px"</code> </td>
+                        <td>String</td>
+                        <td>The width of the guide box. </br> 
+                            Note: Since the input value is a string, units other than px can be used (such as vw, %, etc.) </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">guideHeight</th>
+                        <td><code>"120px"</code> </td>
+                        <td>String</td>
+                        <td>The height of the guide box. </br> 
+                            Note: Since the input value is a string, units other than px can be used (such as vh, %, etc.) </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">guideDistance</th>
+                        <td><code>20</code> </td>
+                        <td>Number</td>
+                        <td>Distance between the guide box and the element it is providing context for (in px) </br>
+                            Note: Recommended value is default value.</td>
                       </tr>
                     </tbody>
                   </table>
+                  <div class="start">
+                    <h4><code>GuideJs.start()</code></h4>
+                    <h6>Function to start the guide (after setting the options with <code> GuideJs.setOptions(settings)</code>. </h6>
+                  </div>
+                  <div class="stop">
+                    <h4><code>GuideJs.stop()</code></h4>
+                    <h6>Function to manully stop the guide. </h6>
+                  </div>
+
             </div>
         </div>
-        
     </body>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> -->
 </html>

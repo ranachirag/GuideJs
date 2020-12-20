@@ -8,10 +8,7 @@
     background-color: rgba(0,0,0,0.8); /*dim the background*/
 }
 
-.guide-box {
-    /* background-color: white; */
-    width: 250px;
-    height: 120px;
+.guide-box-blue {
     border: 3px solid darkgrey;
     border-radius: 10px;
     opacity: 0.9;
@@ -26,7 +23,68 @@
     background-repeat: no-repeat;
     /* animation: progress 4s linear forwards; */
     /* background-position: -230px 0px, 225px -120px, 230px 115px, 0px 120px; */
-    background-position: -250px 0px, 245px -120px, 250px 115px, 0px 120px;
+    /* background-position: -250px 0px, 245px -120px, 250px 115px, 0px 120px; */
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 8px 10px rgb(0, 0, 0, 0.2);
+}
+
+.guide-box-green {
+    border: 3px solid darkgrey;
+    border-radius: 10px;
+    opacity: 0.9;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 11;
+    /* Progress bar CSS from: https://stackoverflow.com/questions/31996110/progress-bar-along-the-borders-of-a-rectangle */
+    background: linear-gradient(to right,green 99.99%, transparent), linear-gradient(to bottom, green 99.99%, transparent), linear-gradient(to right,  green 99.99%, transparent), linear-gradient(to bottom, green 99.99%, transparent);
+    background-size: 100% 6px, 5px 100%, 100% 5px, 5px 100%;
+    background-repeat: no-repeat;
+    /* animation: progress 4s linear forwards; */
+    /* background-position: -230px 0px, 225px -120px, 230px 115px, 0px 120px; */
+    /* background-position: -250px 0px, 245px -120px, 250px 115px, 0px 120px; */
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 8px 10px rgb(0, 0, 0, 0.2);
+}
+
+
+.guide-box-red {
+    border: 3px solid darkgrey;
+    border-radius: 10px;
+    opacity: 0.9;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 11;
+    /* Progress bar CSS from: https://stackoverflow.com/questions/31996110/progress-bar-along-the-borders-of-a-rectangle */
+    background: linear-gradient(to right,red 99.99%, transparent), linear-gradient(to bottom, red 99.99%, transparent), linear-gradient(to right,  red 99.99%, transparent), linear-gradient(to bottom, red 99.99%, transparent);
+    background-size: 100% 6px, 5px 100%, 100% 5px, 5px 100%;
+    background-repeat: no-repeat;
+    animation: 4s linear forwards;
+    /* background-position: -230px 0px, 225px -120px, 230px 115px, 0px 120px; */
+    /* background-position: -250px 0px, 245px -120px, 250px 115px, 0px 120px; */
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 8px 10px rgb(0, 0, 0, 0.2);
+}
+
+.guide-box-yellow {
+    border: 3px solid darkgrey;
+    border-radius: 10px;
+    opacity: 0.9;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 11;
+    /* Progress bar CSS from: https://stackoverflow.com/questions/31996110/progress-bar-along-the-borders-of-a-rectangle */
+    background: linear-gradient(to right, yellow 99.99%, transparent), linear-gradient(to bottom,yellow 99.99%, transparent), linear-gradient(to right,  yellow 99.99%, transparent), linear-gradient(to bottom,  yellow 99.99%, transparent);
+    background-size: 100% 6px, 5px 100%, 100% 5px, 5px 100%;
+    background-repeat: no-repeat;
+    animation: 4s linear forwards;
+    /* background-position: -230px 0px, 225px -120px, 230px 115px, 0px 120px; */
+    /* background-position: -250px 0px, 245px -120px, 250px 115px, 0px 120px; */
     background-color: rgb(255, 255, 255);
     box-shadow: 0px 8px 10px rgb(0, 0, 0, 0.2);
 }
@@ -36,7 +94,7 @@
     opacity: 1;
 }
 
-.guide-previous-btn, .guide-skip-btn, .guide-next-btn {
+.guide-previous-btn-blue, .guide-previous-btn-red, .guide-previous-btn-green, .guide-previous-btn-yellow, .guide-skip-btn-blue, .guide-skip-btn-red, .guide-skip-btn-green, .guide-skip-btn-yellow, .guide-next-btn-blue, .guide-next-btn-red, .guide-next-btn-green, .guide-next-btn-yellow {
     position: absolute;
     width: 30%;
     height: 20%;
@@ -54,27 +112,70 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.guide-next-btn {
+.guide-next-btn-blue, .guide-next-btn-red, .guide-next-btn-green, .guide-next-btn-yellow {
     right: 0px;
 }
 
-.guide-previous-btn {
+.guide-previous-btn-blue, .guide-previous-btn-red, .guide-previous-btn-green, .guide-previous-btn-yellow{
     left: 0px;
 }
 
-.guide-previous-btn:hover {
+.guide-previous-btn-blue:hover {
     background-color:  rgb(18, 195, 248);
     padding-left: 15px;
 }
 
-.guide-next-btn:hover {
+.guide-next-btn-blue:hover {
     background-color:  rgb(18, 195, 248);
     padding-right: 25px;
 }
 
-.guide-next-btn:hover {
+.guide-previous-btn-red:hover {
+    background-color:  red;
+    /* padding-left: 15px; */
+}
+
+.guide-next-btn-red:hover {
+    background-color:  red;
+    /* padding-right: 25px; */
+}
+
+.guide-previous-btn-green:hover {
+    background-color:  green;
+    padding-left: 15px;
+}
+
+.guide-next-btn-green:hover {
+    background-color:  green;
+    padding-right: 25px;
+}
+
+.guide-previous-btn-yellow:hover {
+    background-color:  yellow;
+    padding-left: 15px;
+}
+
+.guide-next-btn-yellow:hover {
+    background-color: yellow;
+    padding-right: 25px;
+}
+
+.guide-skip-btn-blue:hover {
     background-color:  rgb(18, 195, 248);
 }
+
+.guide-skip-btn-red:hover {
+    background-color: red;
+}
+
+.guide-skip-btn-green:hover {
+    background-color:  green;
+}
+
+.guide-skip-btn-yellow:hover {
+    background-color:  yellow;
+}
+
 
 .guide-box-description {
     position: absolute;
@@ -92,8 +193,20 @@
     z-index: 1000000000000;
 }
 
-.guidejs-outline {
+.guidejs-outline-blue {
     border: 3px solid  rgb(18, 195, 248);
+}
+
+.guidejs-outline-red {
+    border: 3px solid  red;
+}
+
+.guidejs-outline-green {
+    border: 3px solid  green;
+}
+
+.guidejs-outline-yellow {
+    border: 3px solid  yellow;
 }
 
 .guidejs-span-highlight {
