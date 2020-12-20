@@ -38,7 +38,7 @@ guide.setOptions({
   theme: "red",
   guideWidth: '500px',
   guideHeight: '300px',
-  guideDistance: 30,
+  guideDistance: 30
 })
 
 guide.start()
@@ -56,7 +56,7 @@ guide.start()
 ```
 
 ### Image of Example
-![example](https://github.com/csc309-fall-2020/js-library-ranachir/blob/master/image.png "Example")
+![example](https://github.com/csc309-fall-2020/js-library-ranachir/blob/master/pub/images/image.png "Example")
 
 ## Link to Documentation
 
