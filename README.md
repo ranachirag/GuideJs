@@ -1,5 +1,9 @@
 # Guide.Js
 
+## Link to Landing Page
+
+- https://pacific-sierra-79272.herokuapp.com/index.html
+
 ## Get Started
 
 ### Download Guide.Js
@@ -54,3 +58,6 @@ guide.start()
 ### Image of Example
 ![example](https://github.com/csc309-fall-2020/js-library-ranachir/blob/master/image.png "Example")
 
+## Link to Documentation
+
+- https://pacific-sierra-79272.herokuapp.com/documentation.html
