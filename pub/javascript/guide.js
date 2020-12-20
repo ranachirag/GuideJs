@@ -73,7 +73,6 @@
                 this.guideBoxSettings.dist = guideDistance
             }
 
-            console.log(this.elementDescriptions)
         },
 
         /* Start the guide */
@@ -235,7 +234,7 @@
             guideBox.style.width = width
             guideBox.style.height = height
             guideBox.style.backgroundPosition = `-${width}px 0px, ${width-5}px -${height}px, ${width}px ${height-5}px, 0px ${height}px`
-            console.log(guideBox.style)
+    
 
             const {element} = this.guideBoxSettings 
             this.guideBox = guideBox
@@ -269,7 +268,7 @@
                 }
             
                 if (locationDirection.includes("left")) {
-                    guideBox.style.left = `${left - width - dist}px`
+                    guideBox.style.left = `${left - guideBoxWidth - dist}px`
                 }
 
                 if (locationDirection.includes("top")) {
@@ -316,7 +315,6 @@
             const guideBox = this.guideBox
             const dist = this.guideBoxSettings.dist
 
-            console.log(this.guideBoxSettings)
 
             const viewportOffset = element.getBoundingClientRect();
             const top = viewportOffset.top;
@@ -395,6 +393,7 @@
                     valPositions.push('side-right-middle')
                 }
             }
+            console.log(valPositions, left)
             return valPositions
 
         },
@@ -411,7 +410,6 @@
             this.guideBox.appendChild(nextBtn)
             nextBtn.classList.add(`guide-next-btn-${this.elementHighlight.theme}`)
             nextBtn.innerText = "Next"
-            console.log(nextBtn)
             return nextBtn
         },
 

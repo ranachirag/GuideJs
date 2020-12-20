@@ -110,6 +110,7 @@
     margin-left: 6px ;
     background-color:lightgrey;
     font-family: 'Roboto', sans-serif;
+    font-size: small;
 }
 
 .guide-next-btn-blue, .guide-next-btn-red, .guide-next-btn-green, .guide-next-btn-yellow {
@@ -190,7 +191,7 @@
 
 .guidejs-highlight {
     position: relative;
-    z-index: 1000000000000;
+    z-index: 33 !important;
 }
 
 .guidejs-outline-blue {
