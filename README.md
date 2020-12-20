@@ -12,7 +12,7 @@
 
 ### JavaScript - Required Files
 
-- The files guide.js and guidejs.css are required to use this library.
+- The files **guide.js** and **guidejs.css** are required to use this library.
 - Include this script in the <head> of your html page:
   
 ```javascript
